@@ -22,7 +22,6 @@ public class computerController extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         RequestDispatcher rd = request.getRequestDispatcher("/views/computer/save.jsp");
-        AbstractDAO db = new AbstractDAO();
         rd.forward(request, response);
     }
 

@@ -2,7 +2,9 @@ package org.example.demo.dao.impl;
 
 import org.example.demo.dao.AbstractDAO;
 import org.example.demo.mapper.ComputerMapper;
+import org.example.demo.mapper.CustomerMapper;
 import org.example.demo.modal.Computer;
+import org.example.demo.modal.Customer;
 import org.example.demo.paging.Pageble;
 
 import java.util.List;
@@ -13,6 +15,11 @@ public class ComputerDAO extends AbstractDAO<Computer> {
         StringBuilder sql = new StringBuilder("INSERT INTO Computer (position, status)");
         sql.append(" VALUES(?, ?)");
         return insert(sql.toString(), computer.getPosition(), computer.getStatus());
+    }
+
+    public List<Computer> findAll(){
+        String sql = new String("SELECT * FROM Computer WHERE status = 'Open'");
+        return query(sql, new ComputerMapper());
     }
 
     public List<Computer> findAll(Pageble pageble) {

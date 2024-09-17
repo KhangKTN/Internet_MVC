@@ -56,7 +56,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
         }
     }
 
-    private void setParameter(PreparedStatement statement, Object... parameters) {
+    public void setParameter(PreparedStatement statement, Object... parameters) {
         try {
             for (int i = 0; i < parameters.length; i++) {
                 Object parameter = parameters[i];

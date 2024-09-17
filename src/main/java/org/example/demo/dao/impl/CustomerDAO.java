@@ -16,6 +16,11 @@ public class CustomerDAO extends AbstractDAO<Customer> {
         return insert(sql.toString(), customer.getName(), customer.getAddress(), customer.getPhone(), customer.getEmail());
     }
 
+    public List<Customer> findAll(){
+        String sql = new String("SELECT * FROM Customer");
+        return query(sql, new CustomerMapper());
+    }
+
     public List<Customer> findAll(Pageble pageble) {
         StringBuilder sql = new StringBuilder("SELECT * FROM Customer");
 //        if (pageble.getSorter() != null && StringUtils.isNotBlank(pageble.getSorter().getSortName()) && StringUtils.isNotBlank(pageble.getSorter().getSortBy())) {

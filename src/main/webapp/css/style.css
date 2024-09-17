@@ -24,9 +24,15 @@ body {
         width: 100%;
     }
 }
+
 .sidebar .active {
-    border-radius: 5px;
+    border-radius: 12px;
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+
+}
+
+.list-group a:hover{
+    background-color: gray;
 }
 
 .sidebar-sticky {

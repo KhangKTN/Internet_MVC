@@ -1,35 +1,62 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: macbookair
-  Date: 16/09/2024
-  Time: 19:50
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
-<header>
-    <jsp:include page="../header.jsp" />
-    <jsp:include page="../sidebar.jsp" />
-</header>
+<h1 class="text-primary">Create Service</h1>
+<form id="formSubmit" action="" method="post" class="mt-4 w-75">
+    <label class="form-label">Service name:</label>
+    <input class="form-control" value="${model.name}" name="name" placeholder="Enter service name">
+    <label class="mt-3 form-label">Unit:</label>
+    <input class="form-control" value="${model.unit}" name="unit" placeholder="Enter unit">
+    <label class="mt-3 form-label">Price:</label>
+    <input class="form-control" value="${model.price}" type="number" name="price" placeholder="Enter price">
+    <input type="hidden" value="${model.id}" id="id" name="id"/>
+    <button id="btnAddOrUpdateService" class="btn btn-primary mt-3" type="submit">${model.id == null ? "Add" : "Update"} service</button>
+</form>
+<script>
+    $('#btnAddOrUpdateService').click(function (e) {
+        e.preventDefault();
+        var data = {};
+        var formData = $('#formSubmit').serializeArray();
+        $.each(formData, function (i, v) {
+            data[""+v.name+""] = v.value;
+        });
+        var id = $('#id').val();
+        if (id == "") {
+            add(data);
+        }
+        else update(data)
 
-<main style="margin-top: 58px;">
-    <div class="container pt-4 mt-5">
-        <h1 class="text-success">Create Computer</h1>
-        <form id="formSubmit" action="" method="post" class="mt-4">
-            <input class="form-control" name="name" placeholder="Enter name">
-            <input class="form-control mt-3" name="unit" placeholder="Enter unit">
-            <input class="form-control mt-3" name="price" placeholder="Enter price">
-            <input type="hidden" value="" id="id" name="id"/>
-            <button id="btnAddOrUpdateComputer" class="btn btn-success mt-3" type="submit">Add computer</button>
-        </form>
-    </div>
-</main>
+        function add(data) {
+            $.ajax({
+                url: '/service',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                dataType: 'json',
+                success: function (result) {
+                    <%--window.location.href = "${NewURL}?type=edit&id="+result.id+"&message=insert_success";--%>
+                    alert('Success')
+                },
+                error: function (error) {
+                    <%--window.location.href = "${NewURL}?type=list&maxPageItem=2&page=1&message=error_system";--%>
+                    alert("Failed")
+                }
+            });
+        }
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-</body>
-</html>
+        function update(data) {
+            $.ajax({
+                url: '/service',
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                dataType: 'json',
+                success: function (result) {
+                    <%--window.location.href = "${NewURL}?type=edit&id="+result.id+"&message=update_success";--%>
+                    alert("Successfully!")
+                },
+                error: function (error) {
+                    <%--window.location.href = "${NewURL}?type=list&maxPageItem=2&page=1&message=error_system";--%>
+                    alert("Failed!")
+                }
+            });
+        }
+    });
+</script>
